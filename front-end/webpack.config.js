@@ -50,11 +50,11 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
-      }
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -70,11 +70,14 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
+  stats: {
+    modules: false,
+  },
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
     watchContentBase: true,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
 };
