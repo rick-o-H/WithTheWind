@@ -1,23 +1,35 @@
 import { hot } from 'react-hot-loader/root';
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { Paper } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import NavBar from './components/NavBar/NavBar';
 import InfoBar from './components/InfoBar/InfoBar';
-// import Segments from './sampleData';
+import TopSegments from './components/TopSegments/TopSegments';
+import Segments from './dummyData';
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
+    height: '95%',
   },
   mapAndSegs: {
-    height: 100,
+    flexGrow: 1,
+    height: '95%',
     backgroundColor: '#45484a',
+  },
+  map: {
+    flexGrow: 1,
+    height: '90%',
   },
 }));
 
 const App = () => {
+  const [segments, updateSegments] = useState(Segments);
+  const [selectedSegment, updateSelectedSegment] = useState({});
+  const selectSegment = (seg) => {
+    updateSelectedSegment(Segments[seg]);
+  };
   const classes = useStyles();
   return (
     <Grid container className={classes.root} spacing={2}>
@@ -25,14 +37,18 @@ const App = () => {
         <NavBar />
       </Grid>
       <Grid item xs={12}>
-        <InfoBar />
+        <InfoBar segment={selectedSegment} />
       </Grid>
-      <Grid container item xs={12} spacing={2}>
-        <Grid item={3} style={{ height: 900 }}>
-          <Paper elevation={3} className={classes.mapAndSegs}>lolPaper</Paper>
-        </Grid>
-        <Grid item={9}>
-          <Paper elevation={3} />
+      <Grid item xs={12} className={classes.root}>
+        <Grid container direction="row" spacing={2} alignItems="stretch" display="flex" className={classes.root}>
+          <Grid item xs={2} className={classes.root}>
+            <Paper elevation={3} className={classes.mapAndSegs}>
+              <TopSegments segments={segments} selectSegment={selectSegment} />
+            </Paper>
+          </Grid>
+          <Grid item xs={10} className={classes.root}>
+            <Paper elevation={3} className={classes.mapAndSegs}>Map</Paper>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

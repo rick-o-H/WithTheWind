@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TimeOfDay from './TimeOfDay';
-// import WindStats from './WindStats';
+import Segment from '../TopSegments/Segment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function InfoBar() {
+export default function InfoBar({ segment }) {
   const classes = useStyles();
 
   return (
@@ -28,7 +28,7 @@ export default function InfoBar() {
             <TimeOfDay />
           </Grid>
           <Grid item xs={9}>
-            <TimeOfDay />
+            {!segment.distance ? null : <Segment segment={segment} />}
           </Grid>
         </Grid>
       </Grid>
