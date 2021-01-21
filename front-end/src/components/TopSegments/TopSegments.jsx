@@ -43,7 +43,7 @@ export default function TopSegments({ segments, selectSegment }) {
         className={classes.tabs}
       >
         {segments.map((segment, index) => (
-          <Tab label={`${index}. ${segment.name}`} {...a11yProps(index)} />
+          <Tab label={`${index}. ${segment.name}`} {...a11yProps(index)} key={segment.id} />
         ))}
       </Tabs>
     </div>

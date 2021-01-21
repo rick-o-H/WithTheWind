@@ -7,6 +7,7 @@ import NavBar from './components/NavBar/NavBar';
 import InfoBar from './components/InfoBar/InfoBar';
 import TopSegments from './components/TopSegments/TopSegments';
 import Segments from './dummyData';
+import Map from './components/Map/Map';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -47,7 +48,9 @@ const App = () => {
             </Paper>
           </Grid>
           <Grid item xs={10} className={classes.root}>
-            <Paper elevation={3} className={classes.mapAndSegs}>Map</Paper>
+            <Paper elevation={3} className={classes.mapAndSegs}>
+              <Map />
+            </Paper>
           </Grid>
         </Grid>
       </Grid>

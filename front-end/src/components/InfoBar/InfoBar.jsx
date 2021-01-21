@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TimeOfDay from './TimeOfDay';
+import TimeOfDayTwo from './TimeOfDayTwo';
 import Segment from '../TopSegments/Segment';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   control: {
     padding: theme.spacing(2),
   },
+  clock: {
+    display: 'flex',
+  },
 }));
 
 export default function InfoBar({ segment }) {
@@ -24,10 +27,10 @@ export default function InfoBar({ segment }) {
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
-          <Grid item xs={3}>
-            <TimeOfDay />
+          <Grid item xs={2} className={classes.clock}>
+            <TimeOfDayTwo />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={10}>
             {!segment.distance ? null : <Segment segment={segment} />}
           </Grid>
         </Grid>

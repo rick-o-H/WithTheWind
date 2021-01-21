@@ -23,5 +23,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'react/prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'no-unused-vars': 'off',
+    'no-bitwise': 'off',
   },
 };
