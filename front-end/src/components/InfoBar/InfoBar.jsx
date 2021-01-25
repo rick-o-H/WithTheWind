@@ -31,7 +31,7 @@ export default function InfoBar({ segment }) {
             <TimeOfDayTwo />
           </Grid>
           <Grid item xs={10}>
-            {!segment.distance ? null : <Segment segment={segment} />}
+            {segment === null ? null : <Segment segment={segment} />}
           </Grid>
         </Grid>
       </Grid>

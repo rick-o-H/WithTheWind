@@ -8,6 +8,7 @@ import InfoBar from './components/InfoBar/InfoBar';
 import TopSegments from './components/TopSegments/TopSegments';
 import Segments from './dummyData';
 import Map from './components/Map/Map';
+import { GetCoordinates } from './Utils/helperFunctions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -27,10 +28,27 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const [segments, updateSegments] = useState(Segments);
-  const [selectedSegment, updateSelectedSegment] = useState({});
+  const [selectedSegment, updateSelectedSegment] = useState(null);
+
+  const [mapInstance, setMapInstance] = useState(null);
+
   const selectSegment = (seg) => {
     updateSelectedSegment(Segments[seg]);
+    // const coords = GetCoordinates(Segments[seg]['map'].polyline);
+    // const segPath = new google.maps.Polyline({
+    //   path: coords,
+    //   geodesic: true,
+    //   strokeColor: '#FF0000',
+    //   strokeOpacity: 1.0,
+    //   strokeWeight: 2,
+    // });
+    // segPath.setMap(mapInstance);
   };
+
+  const setGMap = (map) => {
+    setMapInstance(map);
+  };
+
   const classes = useStyles();
   return (
     <Grid container className={classes.root} spacing={2}>
@@ -49,7 +67,7 @@ const App = () => {
           </Grid>
           <Grid item xs={10} className={classes.root}>
             <Paper elevation={3} className={classes.mapAndSegs}>
-              <Map />
+              <Map selectedSegment={selectedSegment} setGMap={setGMap} />
             </Paper>
           </Grid>
         </Grid>

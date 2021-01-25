@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginRight: theme.spacing(1),
-    backgroundColor: '#45484a',
+    backgroundColor: '#fafafa',
   },
   title: {
     fontSize: 14,
@@ -29,7 +29,7 @@ export default function Segment({ segment }) {
   const classes = useStyles();
   const miles = toMiles(segment.distance);
   return (
-    <Paper elevation={3} style={{ backgroundColor: '#45484a' }}>
+    <Paper elevation={3} style={{ backgroundColor: '#fafafa' }}>
       <Grid container spacing={1}>
         <Grid item xs={4}>
           <Card className={classes.root} variant="outlined">

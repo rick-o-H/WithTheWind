@@ -13,7 +13,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: '#45484a',
+    backgroundColor: '#fafafa',
     display: 'flex',
     height: '95%',
   },

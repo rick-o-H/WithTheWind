@@ -17,7 +17,7 @@ export default function TimeOfDay() {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Paper elevation={3} style={{ backgroundColor: '#45484a' }}>
+      <Paper elevation={3} style={{ backgroundColor: '#fafafa' }}>
         <Grid container justify="space-around">
           <KeyboardTimePicker
             margin="normal"

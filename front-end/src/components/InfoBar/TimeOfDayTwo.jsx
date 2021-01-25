@@ -122,7 +122,7 @@ export default function TimeOfDayTwo() {
   };
 
   return (
-    <Paper elevation={3} style={{ backgroundColor: '#45484a' }}>
+    <Paper elevation={3} style={{ backgroundColor: '#fafafa' }}>
       <form className={classes.root} noValidate autoComplete="off">
         <div>
           <TextField

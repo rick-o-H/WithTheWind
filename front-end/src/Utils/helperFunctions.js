@@ -52,7 +52,7 @@ const GetCoordinates = (polyline) => {
     lat += latitude_change;
     lng += longitude_change;
 
-    coordinates.push([lat / factor, lng / factor]);
+    coordinates.push({ lat: lat / factor, lng: lng / factor });
   }
   console.log(coordinates);
   return coordinates;
