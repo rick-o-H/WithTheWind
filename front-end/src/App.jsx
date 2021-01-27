@@ -34,15 +34,6 @@ const App = () => {
 
   const selectSegment = (seg) => {
     updateSelectedSegment(Segments[seg]);
-    // const coords = GetCoordinates(Segments[seg]['map'].polyline);
-    // const segPath = new google.maps.Polyline({
-    //   path: coords,
-    //   geodesic: true,
-    //   strokeColor: '#FF0000',
-    //   strokeOpacity: 1.0,
-    //   strokeWeight: 2,
-    // });
-    // segPath.setMap(mapInstance);
   };
 
   const setGMap = (map) => {
