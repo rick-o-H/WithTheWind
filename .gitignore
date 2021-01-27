@@ -14,4 +14,6 @@ front-end/src/components/Map/creds.js
 
 back-end/node_modules
 
+back-end/.env
+
 back-end/package-lock.json

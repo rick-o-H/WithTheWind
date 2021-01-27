@@ -5,6 +5,9 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { DateAtSpecificHour } from '../../Utils/helperFunctions';
 
+// idea: slider bar to select a certain time frame(1:00 PM to 4:00 PM) for ride time and
+// display the best segments at different parts of the ride
+
 const times = [
   {
     value: DateAtSpecificHour(0),
