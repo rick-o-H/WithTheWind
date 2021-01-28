@@ -1,6 +1,20 @@
+const axios = require('axios');
+const chalk = require('chalk');
+const log = console.log;
 
-const GetWeather = () => {
+async function GetWeather (cb) {
+  try {
+    const weather = await axios.get(process.env.WEATHER);
+    cb(weather);
+  } catch(err) {
+    log(chalk.redBright('ERROR getting weather forecast within GetWeather function'));
+    log(err);
+    cb(err);
+  }
+}
 
+module.exports = {
+  GetWeather,
 }
 
 // var weather_info = UrlFetchApp.fetch();
