@@ -36,5 +36,7 @@ module.exports = {
     'no-undef': 'off',
     'dot-notation': 'off',
     'quote-props': 'off',
+    'no-var': 'off',
+    'vars-on-top': 'off',
   },
 };

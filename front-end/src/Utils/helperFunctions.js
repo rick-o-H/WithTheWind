@@ -71,7 +71,7 @@ const RenderSegment = (segment, coords, map) => {
   });
 };
 
-const RenderSegments = (map, segments) => {
+const RenderSegments = (map, segments, GetSegmentInfo) => {
 
   const GetCoordinates = (polyline) => {
     const precision = 5;
@@ -115,24 +115,30 @@ const RenderSegments = (map, segments) => {
 
       coordinates.push({ lat: lat / factor, lng: lng / factor });
     }
-    console.log(coordinates);
     return coordinates;
   };
-  for (let i = 0; i < segments.length; i++) {
 
-    if (map.getBounds().contains({ lat: segments[i].start_latitude, lng: segments[i].start_longitude })) {
-      let coords = GetCoordinates(segments[i]['map'].polyline);
-      let segPath = new google.maps.Polyline({
-        path: coords,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-      });
-      segPath.setMap(map);
-      segPath.addListener('click', (e) => {
-        console.log(e);
-      });
-    }
+  for (let i = 0; i < segments.length; i++) {
+    let coords = GetCoordinates(segments[i].segment.polyline);
+    let segPath = new google.maps.Polyline({
+      path: coords,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2,
+    });
+    segPath.setMap(map);
+    const marker = new google.maps.Marker({
+      position: { lat: segments[i].segment.start_latitude, lng: segments[i].segment.start_longitude },
+      map: map,
+      title: '+' + segments[i].wind_advantage + ' mph',
+      icon: 'http://maps.google.com/mapfiles/kml/paddle/1.png',
+    });
+    marker.addListener('click', function(e) {
+      GetSegmentInfo(this.title);
+    });
+    segPath.addListener('click', (e) => {
+      console.log(e);
+    });
   }
 };
 
