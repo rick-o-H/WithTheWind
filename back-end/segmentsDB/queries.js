@@ -148,7 +148,7 @@ const GetTopSegmentsWithinBounds= ({ lowerLon, lowerLat, upperLon, upperLat, Epo
           if (err) {
             callback(err);
           } else {
-            weatherAndSegments.top_segments = weatherAndSegments.top_segments.filter(s => s.segment !== null);
+            weatherAndSegments.top_segments = weatherAndSegments.top_segments.filter(s => s.segment !== null && s.wind_advantage > 0);
             callback(null, weatherAndSegments);
           }
         });

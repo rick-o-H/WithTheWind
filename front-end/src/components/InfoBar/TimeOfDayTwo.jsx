@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TimeOfDayTwo() {
   const classes = useStyles();
-  const [time, setTime] = React.useState(DateAtSpecificHour(new Date().getHours()));
+  const [time, setTime] = React.useState('');
 
   const handleChange = (event) => {
     setTime(event.target.value);

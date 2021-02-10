@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import NavBar from './components/NavBar/NavBar';
 import InfoBar from './components/InfoBar/InfoBar';
 import TopSegments from './components/TopSegments/TopSegments';
-import Segments from './dummyData';
 import Map from './components/Map/Map';
 import { GetCoordinates } from './Utils/helperFunctions';
 
@@ -27,17 +26,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const App = () => {
-  const [segments, updateSegments] = useState(Segments);
-  const [selectedSegment, updateSelectedSegment] = useState(null);
 
-  const [mapInstance, setMapInstance] = useState(null);
-
-  const selectSegment = (seg) => {
-    updateSelectedSegment(Segments[seg]);
+  const [segments, SetSegments] = useState([]);
+  const updateSegments = (newSegments) => {
+    SetSegments(newSegments);
   };
 
-  const setGMap = (map) => {
-    setMapInstance(map);
+  const [selectedSegment, updateSelectedSegment] = useState(null);
+  const selectSegment = (seg) => {
+    updateSelectedSegment(segments[seg]);
   };
 
   const classes = useStyles();
@@ -58,7 +55,7 @@ const App = () => {
           </Grid>
           <Grid item xs={10} className={classes.root}>
             <Paper elevation={3} className={classes.mapAndSegs}>
-              <Map selectedSegment={selectedSegment} setGMap={setGMap} />
+              <Map selectedSegment={selectedSegment} updateSegments={updateSegments} />
             </Paper>
           </Grid>
         </Grid>

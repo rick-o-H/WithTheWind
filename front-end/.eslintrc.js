@@ -38,5 +38,7 @@ module.exports = {
     'quote-props': 'off',
     'no-var': 'off',
     'vars-on-top': 'off',
+    'no-underscore-dangle': 'off',
+    'no-param-reassign': 'off',
   },
 };

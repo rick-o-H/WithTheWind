@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Segment({ segment }) {
   const classes = useStyles();
-  const miles = toMiles(segment.distance);
+  const miles = toMiles(segment.segment.distance);
   return (
     <Paper elevation={3} style={{ backgroundColor: '#fafafa' }}>
       <Grid container spacing={1}>
@@ -35,16 +35,13 @@ export default function Segment({ segment }) {
           <Card className={classes.root} variant="outlined">
             <CardContent>
               <Typography component="h5" variant="h5">
-                {segment.name}
+                {`${segment.segment.name}   +${Math.round(segment.wind_advantage)} mph`}
               </Typography>
               <Typography className={classes.pos} color="textSecondary">
-                {`${miles} miles   ${segment.average_grade}%`}
+                {`${miles} miles   ${segment.segment.average_grade}%`}
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <img src={segment.elevation_profile} alt="elevation profile" />
         </Grid>
       </Grid>
     </Paper>
