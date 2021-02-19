@@ -9,10 +9,6 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
-  bar: {
-    backgroundColor: '#45484a',
-    color: 'white',
-  },
 }));
 
 export default function NavBar() {
@@ -20,7 +16,7 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.bar}>
+      <AppBar position="static" color="primary">
         <Toolbar>
           <NavBarLogo />
           <NavItems />

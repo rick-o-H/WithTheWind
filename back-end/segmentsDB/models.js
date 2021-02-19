@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const mongooseLeanDefaults = require('mongoose-lean-defaults');
 
 const pointSchema = new mongoose.Schema({
   type: {

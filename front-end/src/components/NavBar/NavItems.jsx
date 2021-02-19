@@ -28,3 +28,15 @@ export default function NavItems() {
     </Typography>
   );
 }
+
+// <Typography className={classes.root}>
+// <Link color="inherit" href="/">
+//   Today&apos;s Top Segments
+// </Link>
+// <Link color="inherit" href="/">
+//   By The Hour
+// </Link>
+// <Link color="inherit" href="/">
+//   Map
+// </Link>
+// </Typography>

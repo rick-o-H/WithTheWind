@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DB = require('./segmentsDB/connection');
 const chalk = require('chalk');
 require('dotenv').config();
-const { GetTopSegmentsWithinBounds, GetAllSegments, AddManySegments, GetSegmentsByCity, UpdateWeather, DeleteAllData } = require('./segmentsDB/queries');
+const { GetTopSegmentsWithinBounds, GetAllSegments, AddManySegments, GetSegmentsByCity, UpdateWeather, DeleteAllData, CheckWeather, DeleteWeather } = require('./segmentsDB/queries');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const log = console.log;
@@ -42,9 +42,33 @@ app.get('/weather', (req, res) => {
   UpdateWeather((err, result) => {
     if (err) {
       log(chalk.red(err, 'err'));
-      res.send(404);
+      // res.send(404);
+      res.send(':( update weather failed')
     } else{
       res.send('Success!');
+    }
+  })
+});
+
+app.get('/checkWeather', (req, res) => {
+  CheckWeather((err, result) => {
+    if (err) {
+      log(chalk.red(err, 'err'));
+      res.send(':( check weather failed')
+    } else{
+      res.send(result);
+    }
+  })
+});
+
+app.post('/deleteWeather', (req, res) => {
+  DeleteWeather((err, result) => {
+    if (err) {
+      log(chalk.red(err, 'err'));
+      res.send(404);
+    } else{
+      log('successfully deleted weather');
+      res.send(result);
     }
   })
 });

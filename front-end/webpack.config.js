@@ -16,11 +16,6 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
-        use: ['file-loader'],
-      },
-      {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
@@ -38,7 +33,8 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 8192,
+              name: '[name].[ext]',
+              outputPath: 'images/',
             },
           },
         ],

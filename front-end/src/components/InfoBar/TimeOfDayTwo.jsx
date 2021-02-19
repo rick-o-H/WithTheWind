@@ -1,149 +1,69 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import { DateAtSpecificHour } from '../../Utils/helperFunctions';
 
-// idea: slider bar to select a certain time frame(1:00 PM to 4:00 PM) for ride time and
-// display the best segments at different parts of the ride
-
-const times = [
-  {
-    value: DateAtSpecificHour(0),
-    label: '12:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(1),
-    label: '1:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(2),
-    label: '2:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(3),
-    label: '3:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(4),
-    label: '4:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(5),
-    label: '5:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(6),
-    label: '6:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(7),
-    label: '7:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(8),
-    label: '8:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(9),
-    label: '9:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(10),
-    label: '10:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(11),
-    label: '11:00 AM',
-  },
-  {
-    value: DateAtSpecificHour(12),
-    label: '12:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(13),
-    label: '1:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(14),
-    label: '2:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(15),
-    label: '3:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(16),
-    label: '4:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(17),
-    label: '5:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(18),
-    label: '6:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(19),
-    label: '7:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(20),
-    label: '8:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(21),
-    label: '9:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(22),
-    label: '10:00 PM',
-  },
-  {
-    value: DateAtSpecificHour(23),
-    label: '11:00 PM',
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
 }));
 
-export default function TimeOfDayTwo() {
+export default function TimeOfDayTwo({ updateTime }) {
   const classes = useStyles();
-  const [time, setTime] = React.useState('');
+  const now = new Date().getHours();
+  const initialValue = DateAtSpecificHour(now);
+
+  const [time, setTime] = React.useState(initialValue);
+  const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
+
+    updateTime(new Date(event.target.value).getHours());
     setTime(event.target.value);
+    console.log(event.target.value);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  let nextTwelveHours = [];
+  for (var i = now; i <= now + 12; i++) {
+    nextTwelveHours.push({
+      value: DateAtSpecificHour(i),
+      label: DateAtSpecificHour(i).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    });
+  }
+
   return (
-    <Paper elevation={3} style={{ backgroundColor: '#fafafa' }}>
-      <form className={classes.root} noValidate autoComplete="off">
-        <div>
-          <TextField
-            id="standard-select-time"
-            select
-            label="Time"
-            value={time}
-            onChange={handleChange}
-            helperText="Please select your time"
-          >
-            {times.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </div>
-      </form>
+    <Paper elevation={3} color="secondary">
+      <FormControl className={classes.formControl}>
+        <InputLabel id="controlled-open-select-label">Time</InputLabel>
+        <Select
+          labelId="controlled-open-select-label"
+          id="controlled-open-select"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={time}
+          onChange={handleChange}
+        >
+          {nextTwelveHours.map((option) => (
+            <MenuItem key={option.value} value={option.value.toString()}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Paper>
   );
 }

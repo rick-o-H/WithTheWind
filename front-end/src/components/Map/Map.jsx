@@ -3,15 +3,23 @@ import { Loader } from '@googlemaps/js-api-loader';
 import axios from 'axios';
 import key from './creds';
 import { InitialRenderToMap, SubsequentRenderToMap } from './eventListeners';
+import { DateAtSpecificHour } from '../../Utils/helperFunctions';
 
-const Map = ({ selectedSegment, updateSegments }) => {
+const Map = ({
+  selectedSegment, selectSegment, updateSegments, time,
+}) => {
 
   const [visibleSegments, setVisibleSegments] = useState([]);
 
+  const [features, setFeatures] = useState([]);
+
   const updateVisibleSegments = (segments) => {
+    console.log(segments);
     setVisibleSegments(segments);
     updateSegments(segments);
   };
+
+  const [theMap, setTheMap] = useState(null);
 
   useEffect(() => {
     const loader = new Loader({
@@ -23,23 +31,23 @@ const Map = ({ selectedSegment, updateSegments }) => {
         zoom: 12,
       });
 
-      function GetSegmentInfo(index) {
-        console.log(visibleSegments[index]);
-      }
-
       map.addListener('tilesloaded', () => {
-        InitialRenderToMap(map, updateVisibleSegments, GetSegmentInfo);
-      });
-
-      map.addListener('zoom_changed', () => {
-        SubsequentRenderToMap(map, updateVisibleSegments, GetSegmentInfo);
+        SubsequentRenderToMap(map, updateVisibleSegments, features, setFeatures, selectSegment, time);
       });
 
       map.addListener('dragend', () => {
-        SubsequentRenderToMap(map, updateVisibleSegments, GetSegmentInfo);
+        SubsequentRenderToMap(map, updateVisibleSegments, features, setFeatures, selectSegment, time);
       });
+      setTheMap(map);
     });
   }, []);
+
+  useEffect(() => {
+    if (theMap !== null) {
+      console.log(`The new time is ${time}`);
+      SubsequentRenderToMap(theMap, updateVisibleSegments, features, setFeatures, selectSegment, time);
+    }
+  }, [time]);
 
   return (
     <div id="map" />

@@ -125,35 +125,39 @@ const GetSegmentsByCity = ({ city }, callback) => {
 // Find the weather document for a given unixTimeStamp...
 // and populates it with the top segments for that hour...
 // and that are within the latlng bounds
-const GetTopSegmentsWithinBounds= ({ lowerLon, lowerLat, upperLon, upperLat, EpochDateTime, limit }, callback) => {
+async function GetTopSegmentsWithinBounds({ lowerLon, lowerLat, upperLon, upperLat, EpochDateTime, limit }, callback) {
 
   const lowerLeft = [ lowerLon, lowerLat ];
   const upperRight = [ upperLon, upperLat ];
 
-  Weather.findOne({ time: EpochDateTime }, (err, weather) => {
-    if (err) {
-      log(chalk.redBright('err', err));
-      callback(err);
-    } else {
-      weather.
-        populate({
+  try {
+    const weather = await Weather
+      .findOne({ time: EpochDateTime })
+      .lean()
+      .populate(
+        {
           path: 'top_segments',
           populate: {
             path: 'segment',
             match: { location: { $within: { $box: [ lowerLeft, upperRight ] } } },
-            model: 'Segment'
-          }
-        }).
-        execPopulate((err, weatherAndSegments) => {
-          if (err) {
-            callback(err);
-          } else {
-            weatherAndSegments.top_segments = weatherAndSegments.top_segments.filter(s => s.segment !== null && s.wind_advantage > 0);
-            callback(null, weatherAndSegments);
-          }
-        });
-    }
-  });
+            model: 'Segment',
+          },
+        }
+      );
+      weather.top_segments = weather.top_segments
+        .filter(s => s.segment !== null && s.wind_advantage > 0 );
+      weather.top_segments
+        .sort((a, b) => b.wind_advantage - a.wind_advantage);
+      weather.top_segments
+        .forEach((item, index) => {
+              item['rank'] = index + 1;
+            });
+      weather.top_segments = weather.top_segments
+        .filter(s => s.rank < 21);
+      callback(null, weather);
+  } catch (error) {
+    callback(error);
+  }
 }
 
 // Gets all segments in the DB
@@ -176,7 +180,6 @@ const UpdateWeather = (callback) => {
     if (err) {
       callback(err);
     } else {
-
       // Get new weather data
       GetWeather()
       .then((weather) => {
@@ -217,6 +220,28 @@ const UpdateWeather = (callback) => {
   });
 };
 
+const CheckWeather = (callback) => {
+  Weather.find((err, weather) => {
+    if (err) {
+      log(chalk.redBright('err', err));
+      callback(err);
+    } else {
+      callback(null, weather);
+    }
+  });
+}
+
+// Deletes weather....
+const DeleteWeather = (callback) => {
+  Weather.deleteMany({}, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+};
+
 // Deletes all segments....
 const DeleteAllData = (callback) => {
   Segment.deleteMany({}, (err, result) => {
@@ -235,5 +260,7 @@ module.exports ={
   GetTopSegmentsWithinBounds,
   UpdateWeather,
   GetSegmentsByCity,
-  DeleteAllData
+  DeleteAllData,
+  CheckWeather,
+  DeleteWeather
 }

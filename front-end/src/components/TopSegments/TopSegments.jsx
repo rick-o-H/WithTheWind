@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Avatar from '@material-ui/core/Avatar';
 
 function a11yProps(index) {
   return {
@@ -13,7 +14,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: '#fafafa',
+    // backgroundColor: '#fafafa',
     display: 'flex',
     height: '95%',
   },
@@ -29,7 +30,7 @@ export default function TopSegments({ segments, selectSegment }) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    selectSegment(newValue);
+    selectSegment(newValue + 1);
   };
 
   return (
@@ -43,7 +44,7 @@ export default function TopSegments({ segments, selectSegment }) {
         className={classes.tabs}
       >
         {segments.map((segment, index) => (
-          <Tab label={`${index + 1}. ${segment.segment.name}`} {...a11yProps(index + 1)} key={segment.segment._id} />
+          <Tab label={`${segment.rank}. ${segment.segment.name} +${Math.round(segment.wind_advantage)}`} {...a11yProps(segment.rank)} key={segment.segment._id} />
         ))}
       </Tabs>
     </div>

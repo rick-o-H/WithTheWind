@@ -3,65 +3,83 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import NavBar from './components/NavBar/NavBar';
 import InfoBar from './components/InfoBar/InfoBar';
 import TopSegments from './components/TopSegments/TopSegments';
 import Map from './components/Map/Map';
 import { GetCoordinates } from './Utils/helperFunctions';
+import Footer from './components/Footer/Footer';
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    height: '95%',
+    height: '100%',
+    width: '100%',
   },
-  mapAndSegs: {
+  grids: {
     flexGrow: 1,
-    height: '95%',
-    backgroundColor: '#45484a',
-  },
-  map: {
-    flexGrow: 1,
-    height: '90%',
+    height: '100%',
+    width: '100%',
   },
 }));
 
 const App = () => {
+  const classes = useStyles();
 
   const [segments, SetSegments] = useState([]);
   const updateSegments = (newSegments) => {
     SetSegments(newSegments);
   };
 
-  const [selectedSegment, updateSelectedSegment] = useState(null);
-  const selectSegment = (seg) => {
-    updateSelectedSegment(segments[seg]);
+  const [selectedSegment, updateSelectedSegment] = useState(segments[0]);
+  const selectSegment = (rank) => {
+    let newSegment = segments.find((segment) => segment.rank === rank);
+    updateSelectedSegment(newSegment);
   };
 
-  const classes = useStyles();
+  const [time, setTime] = useState(new Date().getHours());
+  const updateTime = (newTime) => {
+    setTime(newTime);
+  };
+
   return (
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <NavBar />
-      </Grid>
-      <Grid item xs={12}>
-        <InfoBar segment={selectedSegment} />
-      </Grid>
-      <Grid item xs={12} className={classes.root}>
-        <Grid container direction="row" spacing={2} alignItems="stretch" display="flex" className={classes.root}>
-          <Grid item xs={2} className={classes.root}>
-            <Paper elevation={3} className={classes.mapAndSegs}>
-              <TopSegments segments={segments} selectSegment={selectSegment} />
-            </Paper>
+    <>
+      <CssBaseline />
+      <div className={classes.root} style={{ padding: 20 }}>
+        <Grid container className={classes.grids} display="flex" spacing={2}>
+          <Grid item xs={12}>
+            <NavBar />
           </Grid>
-          <Grid item xs={10} className={classes.root}>
-            <Paper elevation={3} className={classes.mapAndSegs}>
-              <Map selectedSegment={selectedSegment} updateSegments={updateSegments} />
-            </Paper>
+          <Grid item xs={12}>
+            <Grid container spacing={0} alignItems="center">
+              <InfoBar segment={selectedSegment} updateTime={updateTime} />
+            </Grid>
+          </Grid>
+          <Grid item xs={12} className={classes.grids}>
+            <Grid container alignItems="stretch" display="flex" className={classes.grids} spacing={2}>
+              <Grid item xs={2} className={classes.grids}>
+                <Paper elevation={3} className={classes.grids}>
+                  <TopSegments segments={segments} selectSegment={selectSegment} />
+                </Paper>
+              </Grid>
+              <Grid item xs={10} className={classes.grids}>
+                <Paper elevation={3} className={classes.grids}>
+                  <Map selectedSegment={selectedSegment} updateSegments={updateSegments} selectSegment={selectSegment} time={time} />
+                </Paper>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} className={classes.grids}>
+            <Grid container alignItems="center" justify="center" display="flex" className={classes.grids} spacing={2}>
+              <Grid item className={classes.grids}>
+                <Footer />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      </div>
+    </>
   );
 };
-
 export default hot(App);
