@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Timeline from '@material-ui/icons/Timeline';
-import { toMiles } from '../../Utils/helperFunctions';
+import Chip from '@material-ui/core/Chip';
+import { toMiles, CalculateMPH } from '../../Utils/helperFunctions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,18 +39,30 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: 0,
   },
+  windChip: {
+    fontSize: 'x-large',
+  },
 }));
 
 export default function Segment({ segment }) {
   const classes = useStyles();
   const miles = toMiles(segment.segment.distance);
+  const komSpeed = Math.round(CalculateMPH(segment.segment.kom, miles));
+  const qomSpeed = Math.round(CalculateMPH(segment.segment.qom, miles));
   return (
     <Paper elevation={3} className={classes.paper}>
-      <Grid container spacing={2} justify="flex-start" alignItems="center">
+      <Grid container spacing={2} justify="space-around" alignItems="center">
         <Grid item>
           <Typography component="h5" variant="h5">
             {`${segment.segment.name}`}
           </Typography>
+        </Grid>
+        <Divider className={classes.divider} orientation="vertical" flexItem variant="middle" />
+        <Grid item>
+          <Typography className={classes.pos}>
+            Wind Advantage
+          </Typography>
+          <Chip label={`+ ${Math.round(segment.wind_advantage)} mph`} color="secondary" className={classes.windChip} />
         </Grid>
         <Divider className={classes.divider} orientation="vertical" flexItem variant="middle" />
         <Grid item>
@@ -74,7 +87,16 @@ export default function Segment({ segment }) {
             KOM
           </Typography>
           <Typography component="h5" variant="h5" className={classes.stats}>
-            {`${segment.segment.kom}  |  `}
+            {`${segment.segment.kom}  |  ${komSpeed} mph`}
+            {}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.pos}>
+            QOM
+          </Typography>
+          <Typography component="h5" variant="h5" className={classes.stats}>
+            {`${segment.segment.qom}  |  ${qomSpeed} mph`}
             {}
           </Typography>
         </Grid>

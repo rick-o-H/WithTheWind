@@ -46,7 +46,7 @@ const App = () => {
 
   return (
     <>
-      <div className={classes.root} style={{ padding: 15 }}>
+      <div className={classes.root} style={{ padding: 5 }}>
         <Grid container className={classes.grids} display="flex" spacing={2}>
           <Grid item xs={12}>
             <NavBar />

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     // backgroundColor: '#fafafa',
     display: 'flex',
-    height: '95%',
+    height: '100%',
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -24,10 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   indicator: {
     backgroundColor: theme.palette.info.light,
-    // backgroundImage: `radial-gradient(circle closest-corner, white, ${theme.palette.secondary.light})`,
   },
   scroller: {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
@@ -48,13 +47,13 @@ export default function TopSegments({ segments, selectSegment }) {
         value={value}
         indicatorColor="primary"
         onChange={handleChange}
-        scrollButtons="desktop"
+        scrollButtons="on"
         aria-label="Vertical tabs example"
         className={classes.tabs}
         classes={{ scrollButtons: classes.scroller }}
       >
         {segments.map((segment, index) => (
-          <Tab classes={{ selected: classes.indicator }} label={`${segment.rank}. ${segment.segment.name} +${Math.round(segment.wind_advantage)}`} {...a11yProps(segment.rank)} key={segment.segment._id} />
+          <Tab classes={{ selected: classes.indicator }} label={`${segment.rank}. ${segment.segment.name}`} {...a11yProps(segment.rank)} key={segment.segment._id} />
         ))}
       </Tabs>
     </div>

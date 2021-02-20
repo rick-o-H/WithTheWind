@@ -26,7 +26,7 @@ export default function InfoBar({ segment, updateTime }) {
   return (
     <Grid item xs={12}>
       <Grid container justify="center" spacing={2}>
-        <Grid item xs={2} className={classes.clock}>
+        <Grid item xs={2}>
           <TimeOfDayTwo updateTime={updateTime} />
         </Grid>
         <Grid item xs={10}>

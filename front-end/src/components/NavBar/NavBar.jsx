@@ -18,13 +18,11 @@ export default function NavBar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.navBar}>
-        <Toolbar>
-          <NavBarLogo />
-          <NavItems />
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="relative" className={classes.navBar}>
+      <Toolbar>
+        <NavBarLogo />
+        <NavItems />
+      </Toolbar>
+    </AppBar>
   );
 }

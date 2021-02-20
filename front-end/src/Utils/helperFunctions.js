@@ -1,4 +1,4 @@
-import { mdiBrightness1 } from '@mdi/js';
+/* eslint-disable no-else-return */
 
 const toMiles = (meters) => {
   const miles = meters * 0.000621371;
@@ -6,6 +6,19 @@ const toMiles = (meters) => {
     return Math.round(miles * 10) / 10;
   }
   return Math.round(miles * 100) / 100;
+};
+
+const CalculateMPH = (duration, miles) => {
+  if (duration.length > 3 && duration.length < 6) {
+    const [minutes, seconds] = duration.split(':');
+    return (miles / ((Number(minutes) * 60 + Number(seconds)) / 3600));
+  } else if (duration.length <= 3) {
+    const seconds = duration.split('s')[0];
+    return (miles / (Number(seconds) / 3600));
+  } else {
+    const [hours, minutes, seconds] = duration.split(':');
+    return (miles / ((Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds)) / 3600));
+  }
 };
 
 const DateAtSpecificHour = (hour) => {
@@ -140,15 +153,18 @@ const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
     };
     const marker = new google.maps.Marker({
       position: { lat: segments[i].segment.start_latitude, lng: segments[i].segment.start_longitude },
+      // eslint-disable-next-line object-shorthand
       map: map,
       icon: markerImage,
+      // eslint-disable-next-line object-shorthand
       label: label,
       title: `${segments[i].rank}`,
       animation: google.maps.Animation.DROP,
     });
+    // eslint-disable-next-line prefer-arrow-callback
+    // eslint-disable-next-line func-names
+    // eslint-disable-next-line prefer-arrow-callback
     marker.addListener('click', function (e) {
-      // console.log(this.title);
-      debugger;
       e.domEvent.preventDefault();
       let rnk = Number(e.domEvent.currentTarget.ariaLabel);
       // let rnk = Number(this.title);
@@ -166,4 +182,5 @@ export {
   DateAtSpecificHour,
   GetCoordinates,
   RenderSegments,
+  CalculateMPH,
 };

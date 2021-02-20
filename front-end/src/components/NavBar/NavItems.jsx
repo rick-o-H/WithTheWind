@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
@@ -16,27 +17,9 @@ export default function NavItems() {
 
   return (
     <Typography className={classes.root}>
-      <Link color="inherit" href="/">
-        Today&apos;s Top Segments
-      </Link>
-      <Link color="inherit" href="/">
-        By The Hour
-      </Link>
-      <Link color="inherit" href="/">
-        Map
+      <Link color="inherit" href="https://github.com/rick-o-H/WithTheWind.git">
+        <GitHubIcon fontSize="large" />
       </Link>
     </Typography>
   );
 }
-
-// <Typography className={classes.root}>
-// <Link color="inherit" href="/">
-//   Today&apos;s Top Segments
-// </Link>
-// <Link color="inherit" href="/">
-//   By The Hour
-// </Link>
-// <Link color="inherit" href="/">
-//   Map
-// </Link>
-// </Typography>
