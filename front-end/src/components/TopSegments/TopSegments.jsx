@@ -22,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     width: '100%',
   },
+  indicator: {
+    backgroundColor: theme.palette.info.light,
+    // backgroundImage: `radial-gradient(circle closest-corner, white, ${theme.palette.secondary.light})`,
+  },
+  scroller: {
+    backgroundColor: theme.palette.primary.light,
+  },
 }));
 
 export default function TopSegments({ segments, selectSegment }) {
@@ -39,12 +46,15 @@ export default function TopSegments({ segments, selectSegment }) {
         orientation="vertical"
         variant="scrollable"
         value={value}
+        indicatorColor="primary"
         onChange={handleChange}
+        scrollButtons="desktop"
         aria-label="Vertical tabs example"
         className={classes.tabs}
+        classes={{ scrollButtons: classes.scroller }}
       >
         {segments.map((segment, index) => (
-          <Tab label={`${segment.rank}. ${segment.segment.name} +${Math.round(segment.wind_advantage)}`} {...a11yProps(segment.rank)} key={segment.segment._id} />
+          <Tab classes={{ selected: classes.indicator }} label={`${segment.rank}. ${segment.segment.name} +${Math.round(segment.wind_advantage)}`} {...a11yProps(segment.rank)} key={segment.segment._id} />
         ))}
       </Tabs>
     </div>

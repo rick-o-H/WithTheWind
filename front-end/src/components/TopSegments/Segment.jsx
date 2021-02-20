@@ -7,6 +7,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import Timeline from '@material-ui/icons/Timeline';
 import { toMiles } from '../../Utils/helperFunctions';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,14 +20,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
   pos: {
-    marginBottom: 12,
+    fontSize: 20,
+    color: theme.palette.text.secondary,
+    marginBottom: 5,
   },
-  pic: {
-    height: '20px',
+  paper: {
   },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+  stats: {
+    color: theme.palette.text.primary,
+    marginRight: theme.spacing(3),
+    justifyContent: 'center',
+  },
+  statIcons: {
+    color: theme.palette.primary.main,
+    marginLeft: theme.spacing(1),
+  },
+  divider: {
+    margin: 0,
   },
 }));
 
@@ -33,17 +44,38 @@ export default function Segment({ segment }) {
   const classes = useStyles();
   const miles = toMiles(segment.segment.distance);
   return (
-    <Paper elevation={3} color="secondary">
-      <Grid container spacing={1}>
-        <Grid item xs>
-          <Avatar color="secondary" className={classes.large}>{`+${Math.round(segment.wind_advantage)} mph`}</Avatar>
-        </Grid>
-        <Grid item xs={6}>
+    <Paper elevation={3} className={classes.paper}>
+      <Grid container spacing={2} justify="flex-start" alignItems="center">
+        <Grid item>
           <Typography component="h5" variant="h5">
             {`${segment.segment.name}`}
           </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {`${miles} miles   ${segment.segment.average_grade}%`}
+        </Grid>
+        <Divider className={classes.divider} orientation="vertical" flexItem variant="middle" />
+        <Grid item>
+          <Typography className={classes.pos}>
+            Grade
+          </Typography>
+          <Typography component="h5" variant="h5" className={classes.stats}>
+            {`${segment.segment.average_grade}%`}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.pos}>
+            Distance
+            <Timeline className={classes.statIcons} size="large" />
+          </Typography>
+          <Typography component="h5" variant="h5" className={classes.stats}>
+            {`${miles} miles`}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.pos}>
+            KOM
+          </Typography>
+          <Typography component="h5" variant="h5" className={classes.stats}>
+            {`${segment.segment.kom}  |  `}
+            {}
           </Typography>
         </Grid>
       </Grid>

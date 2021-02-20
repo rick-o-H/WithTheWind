@@ -147,15 +147,14 @@ const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
       animation: google.maps.Animation.DROP,
     });
     marker.addListener('click', function (e) {
-      console.log(this.title);
-      let rnk = Number(this.title);
+      // console.log(this.title);
+      debugger;
+      e.domEvent.preventDefault();
+      let rnk = Number(e.domEvent.currentTarget.ariaLabel);
+      // let rnk = Number(this.title);
       selectSegment(rnk);
     });
     newFeatures.push(marker);
-    segPath.addListener('click', (e) => {
-      console.log(e);
-    });
-    // }, i * 50);
   }
   setFeatures(newFeatures);
 };
