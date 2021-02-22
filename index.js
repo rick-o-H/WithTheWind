@@ -12,7 +12,7 @@ const log = console.log;
 const app = express();
 const port = 3000;
 
-app.use(express.static(path.join(__dirname, '../front-end/dist')));
+app.use(express.static(path.join(__dirname, '/dist')));
 app.use(bodyParser.json()).use(cors());
 
 app.get('/segments', (req, res) => {
