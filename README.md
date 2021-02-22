@@ -7,7 +7,7 @@
 ## Table of Contents 📚
 
 1. [Demo](#Demo-)
-1. [Tech-stack](#Tech-stack-)
+1. [Built-with](#Built-with-)
 1. [In depth description](#In-depth-description-)
 1. [Things to add](#Things-to-add-)
 
@@ -17,7 +17,20 @@
 
 
 
-## Tech-stack 💻
+## Built-with 💪
+ + Strava API v3
+ + React
+ + Node.js
+ + MongoDB
+ + Mongoose
+ + Google-Maps JavaScript API
+ + Webpack
+ + Babel
+ + Material-UI
+ + Express
+ + Docker
+ + PM2
+ + Axios
 
 ## In depth description 🔎
 
