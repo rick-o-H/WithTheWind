@@ -7,8 +7,8 @@
 ## Table of Contents 📚
 
 1. [Demo](#Demo)
-1. [Tech-Stack](#Tech-Stack)
-1. [In depth description](#In-depth-description)
+1. [Tech-stack](#Tech-stack)
+1. [In depth description](#In depth description)
 1. [Things to add](#Things-to-add)
 
 ## Demo 🎬
