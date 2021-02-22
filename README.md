@@ -33,3 +33,13 @@
  + Axios
 
 ## In depth description 🔎
+=======
+## In depth description 🔎
+
+## Things to add 📝
+
+### Urgent
+
+### Planned
+
+### Maybe one day
