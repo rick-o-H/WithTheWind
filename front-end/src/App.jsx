@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100%',
     width: '100%',
-    // backgroundColor: theme.palette.primary.dark,
   },
   grids: {
     flexGrow: 1,
@@ -33,7 +31,7 @@ const App = () => {
     SetSegments(newSegments);
   };
 
-  const [selectedSegment, updateSelectedSegment] = useState(segments[0]);
+  const [selectedSegment, updateSelectedSegment] = useState(null);
   const selectSegment = (rank) => {
     let newSegment = segments.find((segment) => segment.rank === rank);
     updateSelectedSegment(newSegment);
@@ -82,4 +80,4 @@ const App = () => {
     </>
   );
 };
-export default hot(App);
+export default App;

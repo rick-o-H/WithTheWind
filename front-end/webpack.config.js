@@ -1,13 +1,30 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: [
-    'webpack-hot-middleware/client?reload=true',
-    path.resolve(__dirname, './src/index.js'),
+  mode: 'production',
+  devtool: 'source-map',
+  entry: {
+    app: './src/index.js',
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Production',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
   ],
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
   module: {
     rules: [
       {
@@ -17,15 +34,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(png|jpg|gif)$/i,
@@ -39,41 +48,16 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/',
-            },
-          },
-        ],
-      },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+      '...',
+      new CssMinimizerPlugin(),
     ],
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
-  },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
-  },
-  devtool: 'inline-source-map',
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, 'src', 'index.html'),
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
-  stats: {
-    modules: false,
-  },
-  devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
-    watchContentBase: true,
-    historyApiFallback: true,
   },
 };
