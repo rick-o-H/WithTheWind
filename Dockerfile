@@ -1,7 +1,7 @@
 FROM node:14.8.0-alpine
 ENV NODE_ENV=production
 
-WORKDIR /back
+WORKDIR /with-the-wind
 
 COPY package*.json ./
 
@@ -11,4 +11,4 @@ COPY . ./
 
 EXPOSE  3000
 
-CMD [ "node", "index.js"]
+CMD [ "npm", "run", "pm2"]

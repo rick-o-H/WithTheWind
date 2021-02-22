@@ -1,11 +1,12 @@
 {
-  "name": "front-end",
+  "name": "windprod",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "nodemon index.js",
+    "pm2": "pm2 start processes.json --no-daemon",
     "build:dev": "webpack -watch",
     "build:prod": "webpack"
   },
@@ -23,7 +24,14 @@
     "@mdi/js": "^5.9.55",
     "@mdi/react": "^1.4.0",
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongodb": "^3.6.4",
+    "mongoose": "^5.11.15",
+    "pm2": "^4.5.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "url-loader": "^4.1.1"
@@ -48,7 +56,6 @@
     "mini-css-extract-plugin": "^1.3.8",
     "style-loader": "^2.0.0",
     "webpack": "^5.15.0",
-    "webpack-cli": "^4.3.1",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-cli": "^4.3.1"
   }
 }
