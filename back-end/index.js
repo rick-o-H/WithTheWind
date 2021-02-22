@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const DB = require('./segmentsDB/connection');
 const chalk = require('chalk');
@@ -7,10 +8,11 @@ const { GetTopSegmentsWithinBounds, GetAllSegments, AddManySegments, GetSegments
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const log = console.log;
-const { Segments } = require('./segData');
 
 const app = express();
-const port = 8080;
+const port = 3000;
+
+app.use(express.static(path.join(__dirname, '../front-end/dist')));
 app.use(bodyParser.json()).use(cors());
 
 app.get('/segments', (req, res) => {
@@ -22,6 +24,14 @@ app.get('/segments', (req, res) => {
       res.send(segments);
     }
   })
+
+  // GetTopSegmentsWithinBounds(req.query)
+  //   .then((segments) => {
+  //     res.send(segments);
+  //   }).catch((err) => {
+  //     res.send(404);
+  //     log(chalk.bgRed(err, 'ERROR GETTING SEGMENTS'));
+  //   });
 });
 
 app.get('/segmentsByCity/:city', (req, res) => {
@@ -73,18 +83,18 @@ app.post('/deleteWeather', (req, res) => {
   })
 });
 
-// seed db with segments
-app.post('/seedDB', (req, res) => {
-  AddManySegments(Segments, (err, result) => {
-    if (err) {
-      log(err);
-      res.send(404);
-    } else {
-      log(chalk.magentaBright(result));
-      res.send(result);
-    }
-  })
-});
+// // seed db with segments
+// app.post('/seedDB', (req, res) => {
+//   AddManySegments(Segments, (err, result) => {
+//     if (err) {
+//       log(err);
+//       res.send(404);
+//     } else {
+//       log(chalk.magentaBright(result));
+//       res.send(result);
+//     }
+//   })
+// });
 
 app.post('/clearDB', (req, res) => {
   DeleteAllData((err, result) => {

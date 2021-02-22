@@ -11,7 +11,6 @@ const InitialRenderToMap = (map, updateVisibleSegments, setFeatures, selectSegme
   var time = DateAtSpecificHour(timeOfDay).getTime();
 
   GetSegments(lowerLon, lowerLat, upperLon, upperLat, time).then((data) => {
-    console.log(data);
     updateVisibleSegments(data.data.top_segments);
     RenderSegments(map, data.data.top_segments, setFeatures, selectSegment, data.data.speed);
   });

@@ -69,7 +69,6 @@ const GetCoordinates = (polyline) => {
 
     coordinates.push({ lat: lat / factor, lng: lng / factor });
   }
-  console.log(coordinates);
   return coordinates;
 };
 

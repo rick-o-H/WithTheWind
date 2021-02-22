@@ -30,7 +30,7 @@ export default function InfoBar({ segment, updateTime }) {
           <TimeOfDayTwo updateTime={updateTime} />
         </Grid>
         <Grid item xs={10}>
-          {segment === undefined ? null : <Segment segment={segment} />}
+          {segment === null ? null : <Segment segment={segment} />}
         </Grid>
       </Grid>
     </Grid>

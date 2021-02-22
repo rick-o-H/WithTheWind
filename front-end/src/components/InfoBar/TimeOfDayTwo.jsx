@@ -26,7 +26,6 @@ export default function TimeOfDayTwo({ updateTime }) {
 
     updateTime(new Date(event.target.value).getHours());
     setTime(event.target.value);
-    console.log(event.target.value);
   };
   const handleClose = () => {
     setOpen(false);

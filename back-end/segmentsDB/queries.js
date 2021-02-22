@@ -143,7 +143,8 @@ async function GetTopSegmentsWithinBounds({ lowerLon, lowerLat, upperLon, upperL
             model: 'Segment',
           },
         }
-      );
+      )
+      .exec();
       weather.top_segments = weather.top_segments
         .filter(s => s.segment !== null && s.wind_advantage > 0 );
       weather.top_segments
@@ -154,9 +155,12 @@ async function GetTopSegmentsWithinBounds({ lowerLon, lowerLat, upperLon, upperL
             });
       weather.top_segments = weather.top_segments
         .filter(s => s.rank < 21);
+        // return weather;
       callback(null, weather);
   } catch (error) {
-    callback(error);
+    // return error;
+    console.log(error);
+    callback('err');
   }
 }
 

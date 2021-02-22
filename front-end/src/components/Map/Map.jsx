@@ -14,7 +14,6 @@ const Map = ({
   const [features, setFeatures] = useState([]);
 
   const updateVisibleSegments = (segments) => {
-    console.log(segments);
     setVisibleSegments(segments);
     updateSegments(segments);
   };
@@ -44,7 +43,6 @@ const Map = ({
 
   useEffect(() => {
     if (theMap !== null) {
-      console.log(`The new time is ${time}`);
       SubsequentRenderToMap(theMap, updateVisibleSegments, features, setFeatures, selectSegment, time);
     }
   }, [time]);
