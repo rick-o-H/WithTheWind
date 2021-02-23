@@ -15,6 +15,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Production',
+      template: 'src/index.html'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
