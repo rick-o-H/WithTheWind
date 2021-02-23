@@ -9,15 +9,8 @@ const Map = ({
   selectedSegment, selectSegment, updateSegments, time,
 }) => {
 
-  // const [visibleSegments, setVisibleSegments] = useState([]);
-
-  // const updateVisibleSegments = (segments) => {
-  //   setVisibleSegments(segments);
-  //   updateSegments(segments);
-  // };
-
   const updateVisibleSegments = (segments) => {
-    updateSegments(segments.top_segments);
+    updateSegments(segments);
     return segments;
   };
 

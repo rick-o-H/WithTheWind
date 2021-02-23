@@ -28,17 +28,25 @@ const App = () => {
 
   const [segments, _SetSegments] = useState([]);
 
+  const [weather, setWeather] = useState(null);
+
   // Utilize useRef hook to keep the reference to segments from being stale when invoking selectSegment inside the callback of an event handler
   const segmentsRef = useRef(segments);
   const updateSegments = (newSegments) => {
-    segmentsRef.current = newSegments;
-    _SetSegments(newSegments);
+    segmentsRef.current = newSegments.top_segments;
+    _SetSegments(newSegments.top_segments);
+    let weatherObject = {
+      speed: newSegments.speed,
+      angle: newSegments.angle,
+      direction: newSegments.direction,
+    }
+    setWeather(weatherObject);
   };
 
   const [selectedSegment, updateSelectedSegment] = useState(null);
+
   const selectSegment = (rnk) => {
     var newSegment= null;
-    // debugger;
     // iterate over the segments reference here
     for (var i = 0; i < segmentsRef.current.length; i++) {
       if (segmentsRef.current[i].rank === rnk) {
@@ -62,7 +70,7 @@ const App = () => {
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={0} alignItems="center">
-              <InfoBar segment={selectedSegment} updateTime={updateTime} />
+              <InfoBar segment={selectedSegment} updateTime={updateTime} weather={weather} />
             </Grid>
           </Grid>
           <Grid item xs={12} className={classes.grids}>
