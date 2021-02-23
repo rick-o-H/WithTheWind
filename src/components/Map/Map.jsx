@@ -16,7 +16,6 @@ const Map = ({
 
   const [features, setFeatures] = useState([]);
 
-
   const [theMap, setTheMap] = useState(null);
 
   useEffect(() => {

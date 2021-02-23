@@ -13,7 +13,7 @@
 
 ## Demo 🎬
 
-<img src="readmeAssets/wind2.gif" alt="gif of website">
+<img src="readmeAssets/windUpdated.gif" alt="gif of website">
 
 
 
