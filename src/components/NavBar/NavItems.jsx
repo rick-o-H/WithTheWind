@@ -17,7 +17,7 @@ export default function NavItems() {
 
   return (
     <Typography className={classes.root}>
-      <Link color="inherit" href="https://github.com/rick-o-H/WithTheWind.git">
+      <Link color="inherit" href="https://github.com/rick-o-H/WithTheWind.git" target="_blank" rel="noreferrer">
         <GitHubIcon fontSize="large" />
       </Link>
     </Typography>

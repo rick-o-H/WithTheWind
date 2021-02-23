@@ -126,7 +126,41 @@ const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
       selectSegment(rnk);
     });
 
+    // ----------------------------------------------
+    // SECONDARY MARKER - TODO: move the marker creation into its own function
+
+    var pinColor2 = '#FFEC3B';
+    var pinSVGFilled2 = 'M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z';
+    var labelOriginFilled2 = new google.maps.Point(12, 9);
+
+    var markerImage2 = {
+      path: pinSVGFilled2,
+      anchor: new google.maps.Point(12, 21),
+      fillOpacity: segments[i].wind_advantage / speed,
+      fillColor: pinColor2,
+      strokeWeight: 2,
+      strokeColor: 'orange',
+      scale: 2,
+      labelOrigin: labelOriginFilled2,
+    };
+
+    var label2 = {
+      text: `+${Math.round(segments[i].wind_advantage)}`,
+      color: 'black',
+      fontSize: '12px',
+    };
+
+    const marker2 = new google.maps.Marker({
+      position: { lat: segments[i].segment.start_latitude, lng: segments[i].segment.start_longitude },
+      map: map,
+      icon: markerImage2,
+      label: label2,
+      title: `${segments[i].rank}`,
+      visible: false,
+    });
+
     newFeatures.push(marker);
+    newFeatures.push(marker2);
   }
   setFeatures(newFeatures);
 };

@@ -53,7 +53,7 @@ export default function TimeOfDayTwo({ updateTime, weather }) {
 
   return (
     <Paper elevation={3} color="secondary">
-      <Grid container>
+      <Grid container justify="center">
         <Grid item xs>
           <FormControl className={classes.formControl}>
             <InputLabel id="controlled-open-select-label">Time</InputLabel>
@@ -74,7 +74,7 @@ export default function TimeOfDayTwo({ updateTime, weather }) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs justify="center">
+        <Grid item xs >
           <Typography className={classes.windText}>
           {weather === null ? null : weather.direction}
           </Typography>

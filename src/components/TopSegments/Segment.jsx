@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Timeline from '@material-ui/icons/Timeline';
 import Chip from '@material-ui/core/Chip';
+import Link from '@material-ui/core/Link';
 import { toMiles, CalculateMPH } from '../../Utils/helperFunctions';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +55,9 @@ export default function Segment({ segment }) {
       <Grid container spacing={2} justify="space-around" alignItems="center">
         <Grid item>
           <Typography component="h5" variant="h5">
+            <Link href={`https://www.strava.com/segments/${segment.segment._id}`} target="_blank" rel="noreferrer">
             {`${segment.segment.name}`}
+            </Link>
           </Typography>
         </Grid>
         <Divider className={classes.divider} orientation="vertical" flexItem variant="middle" />

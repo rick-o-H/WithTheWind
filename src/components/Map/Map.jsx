@@ -46,6 +46,31 @@ const Map = ({
     }
   }, [time]);
 
+  useEffect(() => {
+    if (selectedSegment !== null) {
+
+      //TODO: use an object w/keys instead as traversing these arrays is going to be horribly inefficient
+
+      // check if any markers are not original color
+
+      let previousSelectedMarker = features.filter((feature) => feature.visible && feature.icon && feature.icon.fillColor === '#FFEC3B')[0];
+      if (previousSelectedMarker) {
+        previousSelectedMarker.setVisible(false);
+        let previousDefaultMarker = features.filter((feature) => feature.icon && feature.title === previousSelectedMarker.title && feature.icon.fillColor === '#8ADDFF')[0];
+        previousDefaultMarker.setVisible(true);
+      }
+
+      // find next marker that is the currently selected
+      let currentlySelectedMarker = features.filter((feature) => Number(feature.title) === selectedSegment.rank && feature.icon.fillColor === '#FFEC3B')[0];
+
+      // find next marker that is the currently selected
+      let currentlySelectedDefault = features.filter((feature) => Number(feature.title) === selectedSegment.rank && feature.icon.fillColor === '#8ADDFF')[0];
+      currentlySelectedDefault.setVisible(false);
+
+      currentlySelectedMarker.setVisible(true);
+    }
+  }, [selectedSegment])
+
   return (
     <div id="map" />
   );
