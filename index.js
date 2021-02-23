@@ -24,14 +24,6 @@ app.get('/segments', (req, res) => {
       res.send(segments);
     }
   })
-
-  // GetTopSegmentsWithinBounds(req.query)
-  //   .then((segments) => {
-  //     res.send(segments);
-  //   }).catch((err) => {
-  //     res.send(404);
-  //     log(chalk.bgRed(err, 'ERROR GETTING SEGMENTS'));
-  //   });
 });
 
 app.get('/segmentsByCity/:city', (req, res) => {
@@ -46,7 +38,6 @@ app.get('/segmentsByCity/:city', (req, res) => {
     }
   })
 });
-
 
 app.get('/weather', (req, res) => {
   UpdateWeather((err, result) => {
@@ -83,19 +74,6 @@ app.post('/deleteWeather', (req, res) => {
   })
 });
 
-// // seed db with segments
-// app.post('/seedDB', (req, res) => {
-//   AddManySegments(Segments, (err, result) => {
-//     if (err) {
-//       log(err);
-//       res.send(404);
-//     } else {
-//       log(chalk.magentaBright(result));
-//       res.send(result);
-//     }
-//   })
-// });
-
 app.post('/clearDB', (req, res) => {
   DeleteAllData((err, result) => {
     if (err) {
@@ -107,7 +85,6 @@ app.post('/clearDB', (req, res) => {
     }
   });
 })
-
 
 app.listen(port, () => {
   log(chalk.magenta('With-The-Wind back-end service listening @ ') + chalk.bold.greenBright(`http://localhost:${port}`));

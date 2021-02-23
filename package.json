@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
     "pm2": "pm2 start processes.json --no-daemon",
-    "build:dev": "webpack -watch --config webpack.dev.js",
+    "build:dev": "webpack --watch --config webpack.dev.js",
     "build:prod": "webpack --config webpack.prod.js"
   },
   "keywords": [],

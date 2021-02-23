@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -26,14 +26,25 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
 
-  const [segments, SetSegments] = useState([]);
+  const [segments, _SetSegments] = useState([]);
+
+  // Utilize useRef hook to keep the reference to segments from being stale when invoking selectSegment inside the callback of an event handler
+  const segmentsRef = useRef(segments);
   const updateSegments = (newSegments) => {
-    SetSegments(newSegments);
+    segmentsRef.current = newSegments;
+    _SetSegments(newSegments);
   };
 
   const [selectedSegment, updateSelectedSegment] = useState(null);
-  const selectSegment = (rank) => {
-    let newSegment = segments.find((segment) => segment.rank === rank);
+  const selectSegment = (rnk) => {
+    var newSegment= null;
+    // debugger;
+    // iterate over the segments reference here
+    for (var i = 0; i < segmentsRef.current.length; i++) {
+      if (segmentsRef.current[i].rank === rnk) {
+         newSegment = segmentsRef.current[i];
+      }
+    }
     updateSelectedSegment(newSegment);
   };
 

@@ -31,8 +31,13 @@ const SubsequentRenderToMap = (map, updateVisibleSegments, features, setFeatures
   var time = DateAtSpecificHour(timeOfDay).getTime();
 
   GetSegments(lowerLon, lowerLat, upperLon, upperLat, time).then((data) => {
-    updateVisibleSegments(data.data.top_segments);
-    RenderSegments(map, data.data.top_segments, setFeatures, selectSegment, data.data.speed);
+    // return updateVisibleSegments(data.data.top_segments);
+    return updateVisibleSegments(data.data);
+  }).then((segmentsAgain) => {
+    RenderSegments(map, segmentsAgain.top_segments, setFeatures, selectSegment, segmentsAgain.speed);
+  }).catch((err) => {
+    debugger;
+    console.log('err', err);
   });
 };
 

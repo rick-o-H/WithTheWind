@@ -9,14 +9,20 @@ const Map = ({
   selectedSegment, selectSegment, updateSegments, time,
 }) => {
 
-  const [visibleSegments, setVisibleSegments] = useState([]);
+  // const [visibleSegments, setVisibleSegments] = useState([]);
+
+  // const updateVisibleSegments = (segments) => {
+  //   setVisibleSegments(segments);
+  //   updateSegments(segments);
+  // };
+
+  const updateVisibleSegments = (segments) => {
+    updateSegments(segments.top_segments);
+    return segments;
+  };
 
   const [features, setFeatures] = useState([]);
 
-  const updateVisibleSegments = (segments) => {
-    setVisibleSegments(segments);
-    updateSegments(segments);
-  };
 
   const [theMap, setTheMap] = useState(null);
 

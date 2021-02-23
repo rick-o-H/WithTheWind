@@ -48,7 +48,7 @@ export default function Segment({ segment }) {
   const classes = useStyles();
   const miles = toMiles(segment.segment.distance);
   const komSpeed = Math.round(CalculateMPH(segment.segment.kom, miles));
-  const qomSpeed = Math.round(CalculateMPH(segment.segment.qom, miles));
+  const qomSpeed = segment.segment.qom === null ? 0 : Math.round(CalculateMPH(segment.segment.qom, miles));
   return (
     <Paper elevation={3} className={classes.paper}>
       <Grid container spacing={2} justify="space-around" alignItems="center">

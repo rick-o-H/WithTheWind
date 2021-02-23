@@ -5,5 +5,3 @@ const GetSegments = (lowerLon, lowerLat, upperLon, upperLat, time) => {
 };
 
 export default GetSegments;
-
-// return axios.get(`http://localhost:3000/segments?lowerLon=${lowerLon}&lowerLat=${lowerLat}&upperLon=${upperLon}&upperLat=${upperLat}&EpochDateTime=${time}`);
