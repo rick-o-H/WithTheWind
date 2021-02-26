@@ -11,7 +11,7 @@ const pointSchema = new mongoose.Schema({
   coordinates: {
     type: [Number],
     required: true
-  }
+  },
 });
 
 const segmentSchema = new mongoose.Schema({
@@ -23,6 +23,7 @@ const segmentSchema = new mongoose.Schema({
   elevation_profile: String,
   location: {
     type: pointSchema,
+    index: { type: '2dsphere', sparse: true },
     required: true
   },
   start_latitude: Number,

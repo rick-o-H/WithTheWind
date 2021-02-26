@@ -16,12 +16,23 @@ const InitialRenderToMap = (map, updateVisibleSegments, setFeatures, selectSegme
   });
 };
 
-const SubsequentRenderToMap = (map, updateVisibleSegments, features, setFeatures, selectSegment, timeOfDay) => {
+const SubsequentRenderToMap = (
+  map,
+  updateVisibleSegments,
+  defaultMarkers,
+  selectedMarkers,
+  polylines,
+  setDefaultMarkers,
+  setSelectedMarkers,
+  setPolylines,
+  selectSegment,
+  timeOfDay
+   ) => {
 
-  features.forEach((feature) => {
-    feature.setMap(null);
-    feature = null;
-  });
+    [...defaultMarkers, ...selectedMarkers, ...polylines].forEach((feature) => {
+      feature.setMap(null);
+      feature = null;
+    });
 
   var bounds = map.getBounds();
   var lowerLon = bounds.getSouthWest().lng();
@@ -31,10 +42,9 @@ const SubsequentRenderToMap = (map, updateVisibleSegments, features, setFeatures
   var time = DateAtSpecificHour(timeOfDay).getTime();
 
   GetSegments(lowerLon, lowerLat, upperLon, upperLat, time).then((data) => {
-    // return updateVisibleSegments(data.data.top_segments);
     return updateVisibleSegments(data.data);
   }).then((segmentsAgain) => {
-    RenderSegments(map, segmentsAgain.top_segments, setFeatures, selectSegment, segmentsAgain.speed);
+    RenderSegments(map, segmentsAgain.top_segments, setDefaultMarkers, setSelectedMarkers, setPolylines, selectSegment, segmentsAgain.speed);
   }).catch((err) => {
     debugger;
     console.log('err', err);

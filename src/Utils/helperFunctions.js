@@ -27,7 +27,7 @@ const DateAtSpecificHour = (hour) => {
   return hr;
 };
 
-const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
+const RenderSegments = (map, segments, setDefaultMarkers, setSelectedMarkers, setPolylines, selectSegment, speed) => {
 
   const GetCoordinates = (polyline) => {
     const precision = 5;
@@ -74,7 +74,9 @@ const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
     return coordinates;
   };
 
-  let newFeatures = [];
+  let polylines = [];
+  let defaultMarkers = [];
+  let selectedMarkers = [];
 
   for (let i = 0; i < segments.length; i++) {
 
@@ -88,7 +90,7 @@ const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
     });
 
     segPath.setMap(map);
-    newFeatures.push(segPath);
+    polylines.push(segPath);
 
     var pinColor = '#8ADDFF';
     var pinSVGFilled = 'M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z';
@@ -159,10 +161,13 @@ const RenderSegments = (map, segments, setFeatures, selectSegment, speed) => {
       visible: false,
     });
 
-    newFeatures.push(marker);
-    newFeatures.push(marker2);
+    defaultMarkers.push(marker);
+    selectedMarkers.push(marker2);
   }
-  setFeatures(newFeatures);
+  setDefaultMarkers(defaultMarkers);
+  setSelectedMarkers(selectedMarkers);
+  setPolylines(polylines);
+  // setFeatures(newFeatures);
 };
 
 export {

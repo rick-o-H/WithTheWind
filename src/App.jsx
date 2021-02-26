@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -24,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
+
+  useEffect(() => {
+    ReactGA.initialize('UA-167510825-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  })
+
   const classes = useStyles();
 
   const [segments, _SetSegments] = useState([]);

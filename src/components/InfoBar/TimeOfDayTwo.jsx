@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -31,9 +32,12 @@ export default function TimeOfDayTwo({ updateTime, weather }) {
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
-
     updateTime(new Date(event.target.value).getHours());
     setTime(event.target.value);
+    ReactGA.event({
+      category: 'time',
+      action: 'New time selected',
+    })
   };
   const handleClose = () => {
     setOpen(false);

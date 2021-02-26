@@ -14,8 +14,10 @@ const Map = ({
     return segments;
   };
 
-  const [features, setFeatures] = useState([]);
-
+  const [defaultMarkers, setDefaultMarkers] = useState([]);
+  const [selectedMarkers, setSelectedMarkers] = useState([]);
+  const [polylines, setPolylines] = useState([]);
+  const [markerIndex, setMarkerIndex] = useState(null);
   const [theMap, setTheMap] = useState(null);
 
   useEffect(() => {
@@ -29,11 +31,33 @@ const Map = ({
       });
 
       map.addListener('tilesloaded', () => {
-        SubsequentRenderToMap(map, updateVisibleSegments, features, setFeatures, selectSegment, time);
+        SubsequentRenderToMap(
+          map,
+          updateVisibleSegments,
+          defaultMarkers,
+          selectedMarkers,
+          polylines,
+          setDefaultMarkers,
+          setSelectedMarkers,
+          setPolylines,
+          selectSegment,
+          time
+          );
       });
 
       map.addListener('dragend', () => {
-        SubsequentRenderToMap(map, updateVisibleSegments, features, setFeatures, selectSegment, time);
+        SubsequentRenderToMap(
+          map,
+          updateVisibleSegments,
+          defaultMarkers,
+          selectedMarkers,
+          polylines,
+          setDefaultMarkers,
+          setSelectedMarkers,
+          setPolylines,
+          selectSegment,
+          time
+          );
       });
       setTheMap(map);
     });
@@ -41,32 +65,35 @@ const Map = ({
 
   useEffect(() => {
     if (theMap !== null) {
-      SubsequentRenderToMap(theMap, updateVisibleSegments, features, setFeatures, selectSegment, time);
+      SubsequentRenderToMap(
+        theMap,
+        updateVisibleSegments,
+        defaultMarkers,
+        selectedMarkers,
+        polylines,
+        setDefaultMarkers,
+        setSelectedMarkers,
+        setPolylines,
+        selectSegment,
+        time
+        );
     }
   }, [time]);
 
   useEffect(() => {
     if (selectedSegment !== null) {
 
-      //TODO: use an object w/keys instead as traversing these arrays is going to be horribly inefficient
+      let index = selectedSegment.rank -1;
 
-      // check if any markers are not original color
-
-      let previousSelectedMarker = features.filter((feature) => feature.visible && feature.icon && feature.icon.fillColor === '#FFEC3B')[0];
-      if (previousSelectedMarker) {
-        previousSelectedMarker.setVisible(false);
-        let previousDefaultMarker = features.filter((feature) => feature.icon && feature.title === previousSelectedMarker.title && feature.icon.fillColor === '#8ADDFF')[0];
-        previousDefaultMarker.setVisible(true);
+      if (markerIndex !== null) {
+        selectedMarkers[markerIndex].setVisible(false);
+        defaultMarkers[markerIndex].setVisible(true);
       }
 
-      // find next marker that is the currently selected
-      let currentlySelectedMarker = features.filter((feature) => Number(feature.title) === selectedSegment.rank && feature.icon.fillColor === '#FFEC3B')[0];
+      defaultMarkers[index].setVisible(false);
+      selectedMarkers[index].setVisible(true);
 
-      // find next marker that is the currently selected
-      let currentlySelectedDefault = features.filter((feature) => Number(feature.title) === selectedSegment.rank && feature.icon.fillColor === '#8ADDFF')[0];
-      currentlySelectedDefault.setVisible(false);
-
-      currentlySelectedMarker.setVisible(true);
+      setMarkerIndex(index);
     }
   }, [selectedSegment])
 

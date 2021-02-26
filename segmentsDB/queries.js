@@ -3,6 +3,7 @@ const { Segment, Weather } = require('./models');
 const mongoose = require('mongoose');
 const { CalculateBearingAngle } = require('../Utils/CalculateBearing');
 const { GetWeather } = require('../Utils/getWeather');
+const { PerformanceObserver, performance } = require('perf_hooks');
 const log = console.log;
 
 // TO-DO: considering scrapping this one and using the AddMany function to handle singles too
@@ -131,6 +132,7 @@ async function GetTopSegmentsWithinBounds({ lowerLon, lowerLat, upperLon, upperL
   const upperRight = [ upperLon, upperLat ];
 
   try {
+    performance.mark('startDB')
     const weather = await Weather
       .findOne({ time: EpochDateTime })
       .lean()
@@ -139,12 +141,17 @@ async function GetTopSegmentsWithinBounds({ lowerLon, lowerLat, upperLon, upperL
           path: 'top_segments',
           populate: {
             path: 'segment',
-            match: { location: { $within: { $box: [ lowerLeft, upperRight ] } } },
+            match: { location: { $geoWithin: { $box: [ lowerLeft, upperRight ] } } },
             model: 'Segment',
           },
         }
       )
       .exec();
+
+      performance.mark('endDB')
+      performance.measure('db', 'startDB', 'endDB');
+      performance.mark('startFns')
+
       weather.top_segments = weather.top_segments
         .filter(s => s.segment !== null && s.wind_advantage > 0 );
       weather.top_segments
@@ -155,10 +162,11 @@ async function GetTopSegmentsWithinBounds({ lowerLon, lowerLat, upperLon, upperL
             });
       weather.top_segments = weather.top_segments
         .filter(s => s.rank < 21);
-        // return weather;
+
+      performance.mark('endFns')
+      performance.measure('Sort and Filter', 'startFns', 'endFns');
       callback(null, weather);
   } catch (error) {
-    // return error;
     console.log(error);
     callback('err');
   }
@@ -235,6 +243,26 @@ const CheckWeather = (callback) => {
   });
 }
 
+async function SyncIndexes(callback) {
+  try {
+    let synced = await Segment.syncIndexes();
+    callback(null, synced);
+  } catch (error) {
+    console.log(error);
+    callback(error);
+  }
+}
+
+async function FindIndexes(callback) {
+  try {
+    let indexes = await Segment.listIndexes();
+    callback(null, indexes);
+  } catch (error) {
+    console.log(error);
+    callback(error);
+  }
+}
+
 // Deletes weather....
 const DeleteWeather = (callback) => {
   Weather.deleteMany({}, (err, result) => {
@@ -266,5 +294,7 @@ module.exports ={
   GetSegmentsByCity,
   DeleteAllData,
   CheckWeather,
-  DeleteWeather
+  DeleteWeather,
+  SyncIndexes,
+  FindIndexes,
 }

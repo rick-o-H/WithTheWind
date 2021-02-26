@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -14,7 +15,6 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // backgroundColor: '#fafafa',
     display: 'flex',
     height: '100%',
   },
@@ -37,6 +37,10 @@ export default function TopSegments({ segments, selectSegment }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     selectSegment(newValue + 1);
+    ReactGA.event({
+      category: 'top segments',
+      action: 'new segment selected',
+    })
   };
 
   return (

@@ -1,30 +1,76 @@
 const express = require('express');
 const path = require('path');
+const compression = require('compression');
+var expressStaticGzip = require("express-static-gzip");
 const mongoose = require('mongoose');
 const DB = require('./segmentsDB/connection');
 const chalk = require('chalk');
 require('dotenv').config();
-const { GetTopSegmentsWithinBounds, GetAllSegments, AddManySegments, GetSegmentsByCity, UpdateWeather, DeleteAllData, CheckWeather, DeleteWeather } = require('./segmentsDB/queries');
+const { GetTopSegmentsWithinBounds, GetAllSegments, AddManySegments, GetSegmentsByCity, UpdateWeather, DeleteAllData, CheckWeather, DeleteWeather, SyncIndexes, FindIndexes } = require('./segmentsDB/queries');
+const { performance, PerformanceObserver } = require('perf_hooks');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const log = console.log;
+
 
 const app = express();
 const port = 3000;
 
-app.use(express.static(path.join(__dirname, '/dist')));
-app.use(bodyParser.json()).use(cors());
+app.use(expressStaticGzip(path.join(__dirname, 'dist')))
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use(compression());
+app.use(bodyParser.json());
 
 app.get('/segments', (req, res) => {
+
+  var times =[];
+  const obs = new PerformanceObserver((items) => {
+    times.push(items.getEntries()[0])
+  });
+
+  obs.observe({ entryTypes: ['measure'] });
+  performance.measure('Start to Now');
+  performance.mark('Start');
+
   GetTopSegmentsWithinBounds(req.query, (err, segments) => {
     if (err) {
       res.send(404);
       log(chalk.bgRed(err, 'ERROR GETTING SEGMENTS'));
     } else {
+      performance.mark('Finish');
+      performance.measure('Start to Finish', 'Start', 'Finish');
+      const timetosend = `
+          Total;dur=${times[3].duration},
+          db;dur=${times[1].duration},
+          fns;dur=${times[2].duration}
+        `.replace(/\n/g, '');
+      res.append('Server-Timing', timetosend)
       res.send(segments);
     }
   })
 });
+
+app.get('/sync', (req, res) => {
+  SyncIndexes((err, synced) => {
+    if (err) {
+      res.send(404);
+      log(chalk.bgRed(err, 'ERROR syncing indexes'));
+    } else {
+      res.send(synced);
+    }
+  });
+})
+
+app.get('/indexes', (req, res) => {
+  FindIndexes((err, indexes) => {
+    if (err) {
+      res.send(404);
+      log(chalk.bgRed(err, 'ERROR GETTING indexes'));
+    } else {
+      res.send(indexes);
+    }
+  });
+})
+
 
 app.get('/segmentsByCity/:city', (req, res) => {
 
@@ -89,3 +135,4 @@ app.post('/clearDB', (req, res) => {
 app.listen(port, () => {
   log(chalk.magenta('With-The-Wind back-end service listening @ ') + chalk.bold.greenBright(`http://localhost:${port}`));
 });
+

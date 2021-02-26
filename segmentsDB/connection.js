@@ -1,6 +1,7 @@
 const { EC2_URI } = require('../config');
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const log = console.log;
 
 class DB {
   constructor() {
@@ -8,7 +9,7 @@ class DB {
   }
 
   _connect() {
-    mongoose.connect(EC2_URI, { autoIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(EC2_URI, { useCreateIndex: true , useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => {
         console.log(chalk.blue('Successfully connected to database!'));
       })
