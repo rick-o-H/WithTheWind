@@ -2,14 +2,6 @@
 
 >An interactive map for finding Strava segments with the best wind-advantage.
 
-### Check it out here 😎 --> http://3.139.67.132/
-
-## Table of Contents 📚
-
-1. [Demo](#Demo-)
-1. [Built-with](#Built-with-)
-1. [In depth description](#In-depth-description-)
-1. [Things to add](#Things-to-add-)
 
 ## Demo 🎬
 
@@ -31,15 +23,3 @@
  + Docker
  + PM2
  + Axios
-
-## In depth description 🔎
-=======
-## In depth description 🔎
-
-## Things to add 📝
-
-### Urgent
-
-### Planned
-
-### Maybe one day
